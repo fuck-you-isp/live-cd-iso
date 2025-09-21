@@ -1,0 +1,17 @@
+[Unit]
+Description=My Custom Startup Script
+# This makes our service start at the right time in the boot sequence
+After=systemd-user-sessions.service
+
+[Service]
+ExecStart=/usr/local/bin/custom-script.sh
+# These five lines are the fix: they connect the script directly to the main console
+StandardInput=tty
+StandardOutput=tty
+StandardError=tty
+TTYPath=/dev/tty1
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
+

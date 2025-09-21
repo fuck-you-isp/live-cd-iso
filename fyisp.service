@@ -1,0 +1,28 @@
+[Unit]
+Description=Dynamic Docker Compose Service
+# This service waits for the network to be fully online and for Docker to be ready.
+After=network-online.target docker.service
+Requires=docker.service
+Wants=network-online.target
+
+[Service]
+Type=simple
+Restart=always
+TimeoutStartSec=0
+
+# Before starting, remove any old compose file and download the latest version.
+# The '-' prefix means the command will not cause the service to fail if it returns an error (e.g., if the file doesn't exist).
+ExecStartPre=-/usr/bin/rm -f /tmp/docker-compose.yml
+ExecStartPre=/usr/bin/wget -O /tmp/docker-compose.yml https://raw.githubusercontent.com/fuck-you-isp/docker-compose/refs/heads/main/docker-compose.yml
+
+# The main command to start all services defined in the downloaded compose file.
+# This command runs in the foreground, and systemd will monitor it.
+ExecStart=/usr/bin/docker compose -f /tmp/docker-compose.yml up
+
+# The command to gracefully stop and remove all containers on shutdown.
+ExecStop=/usr/bin/docker compose -f /tmp/docker-compose.yml down
+
+[Install]
+WantedBy=multi-user.target
+
+
