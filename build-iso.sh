@@ -175,6 +175,6 @@ rm "$MBR_TEMPLATE"
 
 echo "--- Custom ISO created successfully: $CUSTOM_ISO_NAME ---"
 echo "To test it, run:"
-echo "qemu-system-x86_64 -m 4G -smp 4 -cdrom $CUSTOM_ISO_NAME -net nic -net user,hostfwd=tcp::8080-:80"
+echo "qemu-system-x86_64 -m 4G -smp 4 -cdrom $CUSTOM_ISO_NAME -net nic -net user,hostfwd=tcp::3000-:3000"
 
 

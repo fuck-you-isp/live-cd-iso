@@ -53,7 +53,7 @@ while true; do
         OUTPUT+="Access your dashboard with one of the following URLs:\n"
         OUTPUT+="----------------------------------------------------\n"
         while read -r IP; do
-            OUTPUT+="http://$IP\n"
+            OUTPUT+="http://$IP:3000\n"
         done <<< "$ALL_IPS"
         OUTPUT+="\n\n"
 
